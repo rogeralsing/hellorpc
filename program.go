@@ -6,13 +6,11 @@ import (
 
 	"github.com/gengo/grpc-gateway/runtime"
 	"github.com/golang/glog"
-	"github.com/rogeralsing/hello-rpc/myrpc"
+	"github.com/rogeralsing/hellorpc/myrpc"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"net"
 )
-
-
 
 func run() {
 	ctx := context.Background()

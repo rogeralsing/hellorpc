@@ -13,5 +13,6 @@
     <orderEntry type="jdk" jdkName="Go 1.5.1" jdkType="Go SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="GOPATH &lt;hello-rpc&gt;" level="project" />
+    <orderEntry type="library" name="GOPATH &lt;hellorpc&gt;" level="project" />
   </component>
 </module>

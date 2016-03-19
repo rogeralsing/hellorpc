@@ -13,3 +13,12 @@ func (this Server) CreatePerson(context context.Context, request *CreatePersonRe
 	}
 	return response, nil
 }
+
+func (this Server) GetPerson(context context.Context,request *GetPersonRequest) (*GetPersonResponse, error){
+	//println("Fick en RPC Request...", request.Name)
+	response := &GetPersonResponse{
+		Name: "Roger",
+		Age:40,
+	}
+	return response, nil
+}

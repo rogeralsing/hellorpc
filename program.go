@@ -30,6 +30,7 @@ func runRpc() {
 	myrpc.RegisterPeopleServer(s, &myrpc.Server{})
 	s.Serve(lis)
 }
+//curl  -H 'Content-Type: application/json' -X POST -d '{"name":"abc","age":123}' localhost:8080/api/v1/people
 func main() {
 	flag.Parse()
 	defer glog.Flush()

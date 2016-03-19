@@ -1,0 +1,21 @@
+syntax = "proto3";
+package myrpc;
+import "google/api/annotations.proto";
+
+message CreatePersonRequest {
+    string name = 1;
+    int32 age = 2;
+}
+
+message CreatePersonResponse {
+    string result=1;
+}
+
+service People {
+    rpc CreatePerson(CreatePersonRequest) returns (CreatePersonResponse) {
+        option (google.api.http) = {
+          post: "/api/v1/people"
+          body: "*"
+        };
+  }
+}

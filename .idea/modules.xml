@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/hello-rpc.iml" filepath="$PROJECT_DIR$/hello-rpc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hellorpc.iml" filepath="$PROJECT_DIR$/hellorpc.iml" />
     </modules>
   </component>
 </project>

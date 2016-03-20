@@ -20,6 +20,9 @@ message GetPersonResponse {
     int32 age = 2;
 }
 
+message EmptyMessage {
+}
+
 
 service People {
     rpc CreatePerson(CreatePersonRequest) returns (CreatePersonResponse) {
@@ -32,6 +35,12 @@ service People {
     rpc GetPerson(GetPersonRequest) returns (GetPersonResponse) {
         option (google.api.http) = {
             get: "/api/v1/people/{name}"
+        };
+    }
+
+    rpc GetPeople(EmptyMessage) returns (stream GetPersonResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/people"
         };
     }
 }

@@ -14,11 +14,22 @@ func (this Server) CreatePerson(context context.Context, request *CreatePersonRe
 	return response, nil
 }
 
-func (this Server) GetPerson(context context.Context,request *GetPersonRequest) (*GetPersonResponse, error){
+func (this Server) GetPerson(context context.Context, request *GetPersonRequest) (*GetPersonResponse, error) {
 	//println("Fick en RPC Request...", request.Name)
 	response := &GetPersonResponse{
 		Name: "Roger",
-		Age:40,
+		Age:  40,
 	}
 	return response, nil
+}
+
+func (this Server) GetPeople(empty *EmptyMessage, stream People_GetPeopleServer) error {
+	response := &GetPersonResponse{
+		Name: "Roger",
+		Age:  40,
+	}
+	stream.Send(response)
+	stream.Send(response)
+	stream.Send(response)
+	return nil
 }

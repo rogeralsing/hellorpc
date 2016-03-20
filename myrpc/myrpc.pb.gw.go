@@ -69,6 +69,23 @@ func request_People_GetPerson_0(ctx context.Context, client PeopleClient, req *h
 
 }
 
+func request_People_GetPeople_0(ctx context.Context, client PeopleClient, req *http.Request, pathParams map[string]string) (People_GetPeopleClient, runtime.ServerMetadata, error) {
+	var protoReq EmptyMessage
+	var metadata runtime.ServerMetadata
+
+	stream, err := client.GetPeople(ctx, &protoReq)
+	if err != nil {
+		return nil, metadata, err
+	}
+	header, err := stream.Header()
+	if err != nil {
+		return nil, metadata, err
+	}
+	metadata.HeaderMD = header
+	return stream, metadata, nil
+
+}
+
 // RegisterPeopleHandlerFromEndpoint is same as RegisterPeopleHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
 func RegisterPeopleHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
@@ -145,6 +162,29 @@ func RegisterPeopleHandler(ctx context.Context, mux *runtime.ServeMux, conn *grp
 
 	})
 
+	mux.Handle("GET", pattern_People_GetPeople_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(ctx)
+		defer cancel()
+		if cn, ok := w.(http.CloseNotifier); ok {
+			go func(done <-chan struct{}, closed <-chan bool) {
+				select {
+				case <-done:
+				case <-closed:
+					cancel()
+				}
+			}(ctx.Done(), cn.CloseNotify())
+		}
+		resp, md, err := request_People_GetPeople_0(runtime.AnnotateContext(ctx, req), client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, w, req, err)
+			return
+		}
+
+		forward_People_GetPeople_0(ctx, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
@@ -152,10 +192,14 @@ var (
 	pattern_People_CreatePerson_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "people"}, ""))
 
 	pattern_People_GetPerson_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "people", "name"}, ""))
+
+	pattern_People_GetPeople_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "people"}, ""))
 )
 
 var (
 	forward_People_CreatePerson_0 = runtime.ForwardResponseMessage
 
 	forward_People_GetPerson_0 = runtime.ForwardResponseMessage
+
+	forward_People_GetPeople_0 = runtime.ForwardResponseStream
 )

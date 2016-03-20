@@ -28,8 +28,8 @@ func (this Server) GetPeople(empty *EmptyMessage, stream People_GetPeopleServer)
 		Name: "Roger",
 		Age:  40,
 	}
-	stream.Send(response)
-	stream.Send(response)
-	stream.Send(response)
+	for i:=0;i<1000000 ;i++  {
+		stream.Send(response)
+	}
 	return nil
 }

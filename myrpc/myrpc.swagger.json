@@ -90,7 +90,6 @@
         }
       }
     },
-    "myrpcEmptyMessage": {},
     "myrpcGetPersonRequest": {
       "properties": {
         "name": {

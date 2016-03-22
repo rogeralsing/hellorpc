@@ -6,8 +6,9 @@ import (
 	"net"
 	"log"
 	"golang.org/x/net/context"
-	"github.com/stretchr/testify/assert"
+	_ "github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
+	"sync"
 )
 
 func TestStreamClient(t *testing.T) {
@@ -27,14 +28,24 @@ func TestStreamClient(t *testing.T) {
 	defer conn.Close()
 	client := NewPeopleClient(conn)
 
-	//act
-	stream,err := client.GetPeople(context.Background(), &EmptyMessage{})
+	var wg sync.WaitGroup
 
-	for i:=0;i<1000000 ;i++  {
-		stream.Recv()
-		//assert
-		//assert.Equal(t,"Roger",response.Name)
+	for j := 0; j < 18; j++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			//act
+			stream, _ := client.GetPeople(context.Background(), &EmptyMessage{})
+
+			for i := 0; i < 1000000; i++ {
+				stream.Recv()
+				//assert
+				//assert.Equal(t,"Roger",response.Name)
+			}
+		}()
 	}
-	_,err = stream.Recv()
-	assert.NotNil(t,err)
+
+	wg.Wait()
+	//_,err = stream.Recv()
+	//assert.NotNil(t,err)
 }

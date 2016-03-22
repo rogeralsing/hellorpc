@@ -28,8 +28,16 @@ func (this Server) GetPeople(empty *EmptyMessage, stream People_GetPeopleServer)
 		Name: "Roger",
 		Age:  40,
 	}
-	for i:=0;i<1000000 ;i++  {
-		stream.Send(response)
-	}
+
+	go func() {
+		for i := 0; i < 1000000; i++ {
+			stream.Send(response)
+		}
+	}()
+
+	return nil
+}
+
+func (this Server) FullDuplex(stream People_FullDuplexServer) error {
 	return nil
 }

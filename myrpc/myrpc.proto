@@ -39,8 +39,8 @@ service People {
     }
 
     rpc GetPeople(EmptyMessage) returns (stream GetPersonResponse) {
-        option (google.api.http) = {
-            get: "/api/v1/people"
-        };
+    }
+
+    rpc FullDuplex(stream GetPersonRequest) returns (stream GetPersonResponse) {
     }
 }
